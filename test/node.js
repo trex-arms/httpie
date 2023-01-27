@@ -33,6 +33,8 @@ test('GET (404)', async () => {
 		assert.instance(err, Error, '~> returns a true Error instance');
 		assert.is(err.message, err.statusMessage, '~> the "message" and "statusMessage" are identical');
 		assert.is(err.message, 'Not Found', '~~> Not Found');
+		assert.is(err.statusCode, 404);
+		assert.is(err.uri, 'https://reqres.in/api/users/23');
 		isResponse(err, 404, {}); // +5
 	}
 });
@@ -113,6 +115,7 @@ test('POST (string body w/ object url)', async () => {
 	const uri = parse('https://reqres.in/api/login');
 	await httpie.post(uri, { body }).catch(err => {
 		assert.is(err.message, 'Bad Request');
+		assert.is(err.body, 'peter@klaven')
 		isResponse(err, 400, {
 			error: 'Missing email or username'
 		});
