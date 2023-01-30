@@ -13,6 +13,8 @@ function toError(rej, res, err, uri, body) {
 	rej(err);
 }
 
+const removeBOM = str => (str[0] === `\ufeff`) ? str.slice(1) : str
+
 export function send(method, uri, opts={}) {
 	return new Promise((res, rej) => {
 		let req, tmp, out = '';
@@ -37,7 +39,7 @@ export function send(method, uri, opts={}) {
 				tmp = rr.headers['content-type'];
 				if (tmp && out && tmp.includes('application/json')) {
 					try {
-						out = JSON.parse(out, opts.reviver);
+						out = JSON.parse(removeBOM(out), opts.reviver);
 					} catch (err) {
 						return toError(rej, rr, err, uri, opts.body);
 					}

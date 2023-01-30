@@ -7,6 +7,8 @@ function apply(src, tar, uri, body) {
 	tar.data = src.response;
 }
 
+const removeBOM = str => (str[0] === `\ufeff`) ? str.slice(1) : str
+
 export function send(method, uri, opts) {
 	return new Promise(function (res, rej) {
 		opts = opts || {};
@@ -35,7 +37,7 @@ export function send(method, uri, opts) {
 			tmp = req.headers['content-type'];
 			if (tmp && !!~tmp.indexOf('application/json')) {
 				try {
-					req.data = JSON.parse(req.data, opts.reviver);
+					req.data = JSON.parse(removeBOM(req.data), opts.reviver);
 				} catch (err) {
 					apply(req, err, uri.href || uri, str);
 					return rej(err);

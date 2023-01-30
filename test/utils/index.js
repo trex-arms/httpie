@@ -2,8 +2,16 @@ import { createServer } from 'http';
 import * as assert from 'uvu/assert';
 
 function handler(req, res) {
-	res.setHeader('Content-Type', 'application/json');
-	res.end('{invalid_json');
+	if (req.url === '/invalid_json') {
+		res.setHeader('Content-Type', 'application/json');
+		res.end('{invalid_json');
+	} else if (req.url === '/json_with_bom') {
+		res.setHeader('Content-Type', 'application/json');
+		res.end('\ufeff{"valid_json":"except with a leading Byte Order Mark"}');
+	} else {
+		res.statusCode = 404;
+		res.end('{invalid_json');
+	}
 }
 
 export async function server() {

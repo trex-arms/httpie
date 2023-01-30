@@ -3,6 +3,7 @@
 ## Differences from [`httpie`](https://github.com/lukeed/httpie)
 
 * Added `err.uri` and `err.body`
+* Handles leading [byte order marks](https://en.wikipedia.org/wiki/Byte_order_mark) in JSON responses
 
 
 ## Features
