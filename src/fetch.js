@@ -6,6 +6,8 @@ function apply(src, tar, uri, body) {
 	tar.data = src.body;
 }
 
+const removeBOM = str => (str[0] === `\ufeff`) ? str.slice(1) : str
+
 export function send(method, uri, opts) {
 	opts = opts || {};
 	var timer, ctrl, tmp=opts.body;
@@ -43,7 +45,7 @@ export function send(method, uri, opts) {
 			} else {
 				rr.text().then(str => {
 					try {
-						rr.data = JSON.parse(str, opts.reviver);
+						rr.data = JSON.parse(removeBOM(str), opts.reviver);
 						reply(rr);
 					} catch (err) {
 						err.headers = rr.headers;

@@ -167,9 +167,19 @@ test('via URL (WHATWG)', async () => {
 	isResponse(await httpie.get(foo), 200);
 });
 
+test('BOM', async () => {
+	let ctx = await server();
+	try {
+		const { data } = await httpie.get(`http://localhost:${ctx.port}/json_with_bom`)
+		assert.equal(data, { valid_json: `except with a leading Byte Order Mark` });
+	} finally {
+		ctx.close();
+	}
+});
+
 test('Error: Invalid JSON', async () => {
 	let ctx = await server();
-	await httpie.get(`http://localhost:${ctx.port}/any`).catch(err => {
+	await httpie.get(`http://localhost:${ctx.port}/invalid_json`).catch(err => {
 		assert.instance(err, SyntaxError, '~> caught SyntaxError');
 		assert.ok(err.message.includes('Unexpected token'), '~> had "Unexpected token" message');
 		assert.ok(err.stack.includes('JSON.parse'), '~> printed `JSON.parse` in stack');
