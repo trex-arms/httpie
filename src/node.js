@@ -2,12 +2,14 @@ import { request } from 'https';
 import { globalAgent } from 'http';
 import { parse, resolve } from 'url';
 
-function toError(rej, res, err) {
+function toError(rej, res, err, uri, body) {
 	err = err || new Error(res.statusMessage);
 	err.statusMessage = res.statusMessage;
 	err.statusCode = res.statusCode;
 	err.headers = res.headers;
 	err.data = res.data;
+	err.uri = uri;
+	err.body = body;
 	rej(err);
 }
 
@@ -37,12 +39,12 @@ export function send(method, uri, opts={}) {
 					try {
 						out = JSON.parse(out, opts.reviver);
 					} catch (err) {
-						return toError(rej, rr, err);
+						return toError(rej, rr, err, uri, opts.body);
 					}
 				}
 				rr.data = out;
 				if (rr.statusCode >= 400) {
-					toError(rej, rr);
+					toError(rej, rr, null, uri, opts.body);
 				} else {
 					res(rr);
 				}

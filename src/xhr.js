@@ -1,7 +1,9 @@
-function apply(src, tar) {
+function apply(src, tar, uri, body) {
 	tar.headers = src.headers || {};
 	tar.statusMessage = src.statusText;
 	tar.statusCode = src.status;
+	tar.uri = src.uri;
+	tar.body = src.body;
 	tar.data = src.response;
 }
 
@@ -23,7 +25,7 @@ export function send(method, uri, opts) {
 
 		req.onload = function () {
 			arr = req.getAllResponseHeaders().trim().split(/[\r\n]+/);
-			apply(req, req); //=> req.headers
+			apply(req, req, uri.href || uri, str); //=> req.headers
 
 			while (tmp = arr.shift()) {
 				tmp = tmp.split(': ');
@@ -35,7 +37,7 @@ export function send(method, uri, opts) {
 				try {
 					req.data = JSON.parse(req.data, opts.reviver);
 				} catch (err) {
-					apply(req, err);
+					apply(req, err, uri.href || uri, str);
 					return rej(err);
 				}
 			}
