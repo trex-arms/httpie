@@ -1,6 +1,6 @@
 {
   "name": "@trex-arms/httpie",
-  "version": "2.0.0-next.14",
+  "version": "2.0.0-next.15",
   "repository": "trex-arms/httpie",
   "description": "A fork of lukeed/httpie",
   "browser": "xhr/index.mjs",
