@@ -1,8 +1,8 @@
 {
-  "name": "httpie",
+  "name": "@trex-arms/httpie",
   "version": "2.0.0-next.13",
-  "repository": "lukeed/httpie",
-  "description": "A lightweight, Promise-based HTTP client for Node.js and the browser~!",
+  "repository": "trex-arms/httpie",
+  "description": "A fork of lukeed/httpie",
   "browser": "xhr/index.mjs",
   "unpkg": "xhr/index.min.js",
   "worker": "fetch/index.mjs",
@@ -34,11 +34,6 @@
       "require": "./xhr/index.js"
     },
     "./package.json": "./package.json"
-  },
-  "author": {
-    "name": "Luke Edwards",
-    "email": "luke.edwards05@gmail.com",
-    "url": "https://lukeed.com"
   },
   "engines": {
     "node": ">=10"

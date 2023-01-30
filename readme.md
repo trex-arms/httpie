@@ -1,30 +1,16 @@
-<div align="center">
-  <img src="logo.png" alt="httpie" height="190" />
-</div>
-
-<div align="center">
-  <a href="https://npmjs.org/package/httpie">
-    <img src="https://badgen.now.sh/npm/v/httpie" alt="version" />
-  </a>
-  <a href="https://travis-ci.org/lukeed/httpie">
-    <img src="https://github.com/lukeed/httpie/workflows/CI/badge.svg" alt="CI" />
-  </a>
-  <a href="https://codecov.io/gh/lukeed/httpie">
-    <img src="https://badgen.now.sh/codecov/c/github/lukeed/httpie" alt="codecov" />
-  </a>
-  <a href="https://npmjs.org/package/httpie">
-    <img src="https://badgen.now.sh/npm/dm/httpie" alt="downloads" />
-  </a>
-</div>
-
 <div align="center">A Node.js and browser HTTP client as easy as pie!</div>
+
+## Differences from [`httpie`](https://github.com/lukeed/httpie)
+
+* Added `err.uri` and `err.body`
+
 
 ## Features
 
 * `Promise`- based HTTP requestor
 * Works with HTTP and HTTPS protocols
 * Automatically handles JSON requests and responses
-* Extremely lightweight with **no dependencies** 678 bytes!
+* Extremely lightweight with **no dependencies**!  Less than 1000 bytes
 * Includes aliases for common HTTP verbs: `get`, `post`, `put`, `patch`, and `del`
 
 Additionally, this module is delivered as:
@@ -36,7 +22,7 @@ Additionally, this module is delivered as:
 ## Install
 
 ```
-$ npm install --save httpie
+$ npm install --save @trex-arms/httpie
 ```
 
 
@@ -171,6 +157,8 @@ All responses with `statusCode >= 400` will result in a rejected `httpie` reques
 * `err.statusCode` – `Number` – The response's `statusCode` value;
 * `err.headers` – `Object` – The response's `headers` object;
 * `err.data` – `Mixed` – The response's payload;
+* `err.uri` – `String` or `URL` – The request's URI;
+* `err.body` – `String` – The request's payload;
 
 Additionally, errors that are a result of a timeout expiration will have a truthy `err.timeout` value.
 
@@ -182,10 +170,12 @@ import { get } from 'httpie';
 get('https://example.com/404').catch(err => {
   console.error(`(${err.statusCode}) ${err.message}`)
   console.error(err.headers['content-type']);
+  console.error(err.uri);
   console.error(`~> ${err.data}`);
 });
 //=> "(404) Not Found"
 //=> "text/html; charset=UTF-8"
+//=> "https://example.com/404"
 //=> ~> <?xml version="1.0" encoding="iso-8859-1"?>\n<!DOCTYPE html ...</body>\n</html>
 ```
 
