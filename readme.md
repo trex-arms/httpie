@@ -2,7 +2,7 @@
 
 ## Differences from [`httpie`](https://github.com/lukeed/httpie)
 
-* Added `err.uri` and `err.body`
+* Added `err.request_uri` and `err.request_body`
 * Handles leading [byte order marks](https://en.wikipedia.org/wiki/Byte_order_mark) in JSON responses
 
 
@@ -158,8 +158,8 @@ All responses with `statusCode >= 400` will result in a rejected `httpie` reques
 * `err.statusCode` – `Number` – The response's `statusCode` value;
 * `err.headers` – `Object` – The response's `headers` object;
 * `err.data` – `Mixed` – The response's payload;
-* `err.uri` – `String` or `URL` – The request's URI;
-* `err.body` – `String` – The request's payload;
+* `err.request_uri` – `String` or `URL` – The request's URI;
+* `err.request_body` – `String` – The request's payload;
 
 Additionally, errors that are a result of a timeout expiration will have a truthy `err.timeout` value.
 

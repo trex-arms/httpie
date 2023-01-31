@@ -8,8 +8,8 @@ function toError(rej, res, err, uri, body) {
 	err.statusCode = res.statusCode;
 	err.headers = res.headers;
 	err.data = res.data;
-	err.uri = uri;
-	err.body = body;
+	err.request_uri = uri;
+	err.request_body = body;
 	rej(err);
 }
 

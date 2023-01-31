@@ -1,9 +1,9 @@
 function apply(src, tar, uri, body) {
 	tar.statusMessage = src.statusText;
 	tar.statusCode = src.status;
-	tar.uri = uri;
-	tar.body = body;
 	tar.data = src.body;
+	tar.request_uri = uri;
+	tar.request_body = body;
 }
 
 const removeBOM = str => (str[0] === `\ufeff`) ? str.slice(1) : str
